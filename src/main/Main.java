@@ -1,11 +1,9 @@
-package sample;
+package main;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -22,7 +20,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        //Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
         window = primaryStage;
         window.setTitle("table view and menu");
 
@@ -155,7 +153,12 @@ public class Main extends Application {
         VBox vBox = new VBox(10);
         vBox.getChildren().addAll(menuBar,productTable,buttonBox);
 
-        window.setScene(new Scene(vBox, 600, 275));
+
+
+        Scene mainScene = new Scene(vBox, 600, 275);
+        mainScene.getStylesheets().add(getClass().getResource("style.css").toString());
+
+        window.setScene(mainScene);
         window.show();
     }
 
