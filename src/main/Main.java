@@ -150,8 +150,22 @@ public class Main extends Application {
         buttonBox.getChildren().addAll(nameInput,priceInput,quantityInput,addButton,deleteButton);
 
 
+        //style part
+        VBox styleVBox = new VBox(10);
+        Label slabel1 = new Label("style 1 label");
+        slabel1.setStyle("-fx-text-fill: blue"); // inline style
+
+        Button blueButton = new Button("blueButton");
+        blueButton.getStyleClass().add("button-blue");
+
+        Label slabel2 = new Label("style 2 label");
+        slabel2.setId("bold-label");
+
+        styleVBox.getChildren().addAll(slabel1, blueButton, slabel2);
+
+
         VBox vBox = new VBox(10);
-        vBox.getChildren().addAll(menuBar,productTable,buttonBox);
+        vBox.getChildren().addAll(menuBar,productTable,buttonBox,styleVBox);
 
 
 
