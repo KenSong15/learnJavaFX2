@@ -1,6 +1,8 @@
 package main;
 
 import javafx.application.Application;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -164,12 +166,25 @@ public class Main extends Application {
         styleVBox.getChildren().addAll(slabel1, blueButton, slabel2);
 
 
+        //binding example on input
+        VBox bindBox = new VBox(10);
+        Label bindttile = new Label("show info responsively while typing");
+
+        TextField typeField = new TextField();
+        typeField.setMaxWidth(200);
+        typeField.setPromptText("type here...");
+        Label typemonitor = new Label("(type monitor)");
+        typemonitor.textProperty().bind(typeField.textProperty());
+
+        bindBox.getChildren().addAll(bindttile,typeField,typemonitor);
+
         VBox vBox = new VBox(10);
-        vBox.getChildren().addAll(menuBar,productTable,buttonBox,styleVBox);
+        vBox.getChildren().addAll(menuBar,productTable,buttonBox,new Separator() ,
+                styleVBox, new Separator(),bindBox);
 
 
 
-        Scene mainScene = new Scene(vBox, 600, 275);
+        Scene mainScene = new Scene(vBox, 800, 600);
         mainScene.getStylesheets().add(getClass().getResource("style.css").toString());
 
         window.setScene(mainScene);
@@ -210,6 +225,19 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+
+        //pure binding example
+        IntegerProperty x = new SimpleIntegerProperty(3);
+        IntegerProperty y = new SimpleIntegerProperty();
+
+        y.bind(x.multiply(10));
+        System.out.println("x: "+ x.getValue());
+        System.out.println("y: "+ y.getValue() + "\n");
+
+        x.setValue(6);
+        System.out.println("x: "+ x.getValue());
+        System.out.println("y: "+ y.getValue() + "\n");
+
         launch(args);
     }
 }
