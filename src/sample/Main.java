@@ -26,6 +26,86 @@ public class Main extends Application {
         window = primaryStage;
         window.setTitle("table view and menu");
 
+        //menu file:
+        Menu fileMenu = new Menu("_File");
+            //menu item
+        MenuItem miNew = new MenuItem("new...");
+        miNew.setOnAction(e->System.out.println("new clicked"));
+
+        MenuItem miOpen = new MenuItem("open...");
+        MenuItem miSave = new MenuItem("save...");
+        MenuItem miSet = new MenuItem("set...");
+        MenuItem miExit = new MenuItem("exit...");
+
+        fileMenu.getItems().addAll(miNew,miOpen,miSave,new SeparatorMenuItem(),miSet,miExit);
+
+
+        //menu edit:
+        Menu editMenu = new Menu("_Edit");
+            //menu item
+        MenuItem miredo = new MenuItem("redo");
+        miredo.setOnAction(e->System.out.println("redo clicked"));
+
+        MenuItem miundo = new MenuItem("undo");
+        miundo.setOnAction(e->System.out.println("undo clicked"));
+
+        MenuItem micopy = new MenuItem("copy");
+        miredo.setOnAction(e->System.out.println("copy clicked"));
+
+        MenuItem mipaste = new MenuItem("paste");
+        miundo.setOnAction(e->System.out.println("paste clicked"));
+        mipaste.setDisable(true);
+
+        editMenu.getItems().addAll(miundo,miredo,new SeparatorMenuItem(),micopy,mipaste);
+
+
+        //menu check:
+        Menu checkMenu = new Menu("_Check");
+        //menu item
+        CheckMenuItem micheck1 = new CheckMenuItem("check1");
+        micheck1.setOnAction(e->{
+            if(micheck1.isSelected()){
+                System.out.println("1 check");
+            } else {
+                System.out.println("1 uncheck");
+            }
+        });
+        micheck1.setSelected(true);
+
+        CheckMenuItem micheck2 = new CheckMenuItem("check2");
+        micheck2.setOnAction(e->{
+            if(micheck2.isSelected()){
+                System.out.println("2 check");
+            } else {
+                System.out.println("2 uncheck");
+            }
+        });
+
+        checkMenu.getItems().addAll(micheck1,micheck2);
+
+
+        //menu radio:
+        Menu radioMenu = new Menu("_Radio");
+        ToggleGroup radioToggle = new ToggleGroup();
+        //menu item
+        RadioMenuItem miradio1 = new RadioMenuItem("radio1");
+        miradio1.setOnAction(e->System.out.println("radio 1 selected"));
+
+        RadioMenuItem miradio2 = new RadioMenuItem("radio2");
+        miradio2.setOnAction(e->System.out.println("radio 2 selected"));
+
+        RadioMenuItem miradio3 = new RadioMenuItem("radio3");
+        miradio3.setOnAction(e->System.out.println("radio 3 selected"));
+
+        radioToggle.getToggles().addAll(miradio1,miradio2,miradio3);
+
+        radioMenu.getItems().addAll(miradio1,miradio2,miradio3);
+
+        //menubar
+        MenuBar menuBar = new MenuBar();
+        menuBar.getMenus().addAll(fileMenu,editMenu,checkMenu,radioMenu);
+
+        //table:
         //name column
         TableColumn<Product, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setMinWidth(100);
@@ -73,12 +153,11 @@ public class Main extends Application {
 
 
         VBox vBox = new VBox(10);
-        vBox.getChildren().addAll(productTable,buttonBox);
+        vBox.getChildren().addAll(menuBar,productTable,buttonBox);
 
         window.setScene(new Scene(vBox, 600, 275));
         window.show();
     }
-
 
 
     //get all of products
