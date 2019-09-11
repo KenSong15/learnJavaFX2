@@ -7,10 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -47,6 +44,7 @@ public class Main extends Application {
         productTable = new TableView<>();
         productTable.setItems(getProduct());
         productTable.getColumns().addAll(nameColumn,priceColumn,quantityColumn);
+        productTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
 
         //name input
@@ -66,7 +64,9 @@ public class Main extends Application {
 
         //button
         Button addButton = new Button("add");
+        addButton.setOnAction(e -> addButtonClicked());
         Button deleteButton = new Button("delete");
+        deleteButton.setOnAction(e -> deleteButtonClicked());
         HBox buttonBox = new HBox(10);
         buttonBox.setPadding(new Insets(10,10,10,10));
         buttonBox.getChildren().addAll(nameInput,priceInput,quantityInput,addButton,deleteButton);
@@ -79,6 +79,8 @@ public class Main extends Application {
         window.show();
     }
 
+
+
     //get all of products
     public ObservableList<Product> getProduct(){
         ObservableList<Product> products = FXCollections.observableArrayList();
@@ -87,10 +89,29 @@ public class Main extends Application {
         products.add(new Product("ipad", 499.00, 10));
         products.add(new Product("ipod", 299.00, 25));
         products.add(new Product("iwatch", 439.00, 15));
-
         return products;
     }
 
+
+    private void addButtonClicked() {
+        Product np = new Product();
+        np.setName(nameInput.getText());
+        np.setPrice(Double.parseDouble(priceInput.getText()));
+        np.setPrice(Integer.parseInt(quantityInput.getText()));
+
+        productTable.getItems().add(np);
+        nameInput.clear();
+        priceInput.clear();
+        quantityInput.clear();
+    }
+
+    private void deleteButtonClicked() {
+        ObservableList<Product> productSelected, allProducts;
+        allProducts = productTable.getItems();
+        productSelected = productTable.getSelectionModel().getSelectedItems();
+
+        productSelected.forEach(allProducts::remove);
+    }
 
     public static void main(String[] args) {
         launch(args);
