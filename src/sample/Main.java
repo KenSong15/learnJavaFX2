@@ -4,11 +4,15 @@ import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -16,6 +20,8 @@ public class Main extends Application {
 
     Stage window;
     TableView<Product> productTable;
+
+    TextField nameInput, priceInput, quantityInput;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -25,17 +31,17 @@ public class Main extends Application {
 
         //name column
         TableColumn<Product, String> nameColumn = new TableColumn<>("Name");
-        nameColumn.setMinWidth(200);
+        nameColumn.setMinWidth(100);
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         //price column
         TableColumn<Product, String> priceColumn = new TableColumn<>("Price");
-        priceColumn.setMinWidth(100);
+        priceColumn.setMinWidth(70);
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         //quantity column
         TableColumn<Product, String> quantityColumn = new TableColumn<>("Quantity");
-        quantityColumn.setMinWidth(100);
+        quantityColumn.setMinWidth(50);
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
         productTable = new TableView<>();
@@ -43,10 +49,33 @@ public class Main extends Application {
         productTable.getColumns().addAll(nameColumn,priceColumn,quantityColumn);
 
 
-        VBox vBox = new VBox(10);
-        vBox.getChildren().addAll(productTable);
+        //name input
+        nameInput = new TextField();
+        nameInput.setPromptText("product name");
+        nameInput.setMinWidth(100);
 
-        window.setScene(new Scene(vBox, 300, 275));
+        //price input
+        priceInput = new TextField();
+        priceInput.setPromptText("price");
+        priceInput.setMaxWidth(70);
+
+        //quantity input
+        quantityInput = new TextField();
+        quantityInput.setPromptText("quantity");
+        quantityInput.setMaxWidth(70);
+
+        //button
+        Button addButton = new Button("add");
+        Button deleteButton = new Button("delete");
+        HBox buttonBox = new HBox(10);
+        buttonBox.setPadding(new Insets(10,10,10,10));
+        buttonBox.getChildren().addAll(nameInput,priceInput,quantityInput,addButton,deleteButton);
+
+
+        VBox vBox = new VBox(10);
+        vBox.getChildren().addAll(productTable,buttonBox);
+
+        window.setScene(new Scene(vBox, 600, 275));
         window.show();
     }
 
